@@ -3,19 +3,39 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
+import ChangePassword from './ChangePassword';
+
 class SignOut extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showChangePasswordForm: false
+    };
+  }
   render() {
     console.log(this.props.user);
+    if (this.state.showChangePasswordForm) {
+      return <ChangePassword />
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.h1}>Welcome</Text>
         <Text style={styles.h3}>{this.props.user.emails[0].address}</Text>
+
+        <TouchableOpacity style={styles.button} onPress={() => this.changePassword()}>
+          <Text style={styles.buttonText}>Change Password</Text>
+        </TouchableOpacity>
      
         <TouchableOpacity style={styles.button} onPress={() => Meteor.logout()}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
     );
+  }
+
+  changePassword() {
+    console.log('show changePassword form');
+    this.setState({showChangePasswordForm: true});
   }
 }
 
