@@ -1,22 +1,41 @@
 import React, { Component } from 'react';
-import Meteor, { createContainer } from 'react-native-meteor';
 import {
   Text,
   TouchableOpacity, // ADDED
   View
 } from 'react-native';
+import Meteor, { createContainer, connectMeteor } from 'react-native-meteor';
 
 import styles from './styles';
 
 const SERVER_URL = 'ws://192.168.2.9:3030/websocket';
 
-class App extends Component {
+import SignIn from './SignIn';
+import SignOut from './SignOut';
 
+// @connectMeteor
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.data = {};
+  }
   componentWillMount() {
     Meteor.connect(SERVER_URL);  
   }
 
+  // getMeteorData() {
+  //   return {
+  //     user: Meteor.user(),
+  //   };
+  // }
+
   render() {
+      if (this.props.user) {
+        return <SignOut user={this.props.user} />;
+      }
+      return <SignIn />;
+  }
+  render2() {
     return (
       <View style={styles.container}>
 
@@ -55,6 +74,7 @@ class App extends Component {
 export default createContainer(() => {
   Meteor.subscribe('items');
   return {
+    user: Meteor.user(),
     items: Meteor.collection('items').find(),
     count: Meteor.collection('items').find().length
   };
