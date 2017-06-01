@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#c5c5c5',
   },
+  H3: {
+    fontSize: 21
+  }
 });
 
 export default styles;
