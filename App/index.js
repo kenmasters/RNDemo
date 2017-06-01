@@ -5,11 +5,12 @@ import {
   View
 } from 'react-native';
 import Meteor, { createContainer, connectMeteor } from 'react-native-meteor';
-
+import { NetworkInfo } from 'react-native-network-info';
 import styles from './styles';
+import Realm from 'realm';
 
-const SERVER_URL = 'ws://192.168.2.9:3030/websocket';
-
+const SERVER_URL = 'ws://192.168.2.12:3030/websocket';
+// const Realm = require('realm');
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 
@@ -18,9 +19,34 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.data = {};
+
+    // // Get Local IP 
+    // NetworkInfo.getIPAddress(ip => {
+    //   console.log(ip);
+    // });
+     
+    // // Get IPv4 IP (Android Only) 
+    // NetworkInfo.getIPV4Address(ipv4 => {
+    //   console.log(ipv4);
+    // });
+     
+    // // Get SSID 
+    // NetworkInfo.getSSID(ssid => {
+    //   console.log(ssid);
+    // });
+     
+    // // Get BSSID 
+    // NetworkInfo.getBSSID(ssid => {
+    //   console.log(ssid);
+    // });
   }
+
   componentWillMount() {
     Meteor.connect(SERVER_URL);  
+  }
+
+  componentDidMount() {
+    
   }
 
   // getMeteorData() {
@@ -29,7 +55,30 @@ class App extends Component {
   //   };
   // }
 
+  //render for realm 
   render() {
+    let realm = new Realm({
+       schema: [
+       	{name: 'Dog', properties: {name: 'string'}}
+       ]
+     });
+
+
+     // realm.write(() => {
+     //   realm.create('Dog', {name: 'Rex'});
+     // });
+
+     return (
+       <View style={styles.container}>
+         <Text style={styles.welcome}>
+           Count of Dogs in Realm: {realm.objects('Dog').length}
+           {realm.objects('Dog').map((dog) => <Text key={dog.name}>{dog.name}</Text>)}
+         </Text>
+       </View>
+     );
+   }
+
+  render1() {
       if (this.props.user) {
         return <SignOut user={this.props.user} />;
       }

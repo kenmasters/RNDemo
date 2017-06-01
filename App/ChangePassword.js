@@ -6,7 +6,7 @@ const { width, height } = Dimensions.get('window');
 class ChangePassword extends Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
       oldPassword: '',
       newPassword: '',
       error: null
@@ -48,7 +48,7 @@ class ChangePassword extends Component {
   }
 
   isValid() {
-    const { oldPassword, newPassword } = this.state;
+    let { oldPassword, newPassword } = this.state;
     let valid = false;
 
     oldPassword = oldPassword.trim().replace('/\s+/g',' ');
@@ -68,7 +68,7 @@ class ChangePassword extends Component {
   onChangePassword() {
     console.log('trying to change password...');
     
-    const { oldPassword, newPassword } = this.state;
+    let { oldPassword, newPassword } = this.state;
 
     if (this.isValid()) {
       // try to change user password
