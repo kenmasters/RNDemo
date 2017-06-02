@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ListView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Meteor, { createContainer, connectMeteor } from 'react-native-meteor';
 import { NetworkInfo } from 'react-native-network-info';
 import styles from './styles';
 import Realm from 'realm';
-import { ListView } from 'realm/react-native';
 const { width, height } = Dimensions.get('window');
 
 
